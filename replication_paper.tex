@@ -1,0 +1,381 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{threeparttable}
+\usepackage{rotating}
+\usepackage{placeins}
+\usepackage{amsmath}
+
+% Adjust float parameters for better placement
+\renewcommand{\topfraction}{0.9}
+\renewcommand{\bottomfraction}{0.9}
+\renewcommand{\textfraction}{0.1}
+\setcounter{topnumber}{4}
+\setcounter{bottomnumber}{4}
+
+\title{Replication Output:\\
+\large Wage Theft, Market Power, and Outsourcing:\\
+The Case of H-1B Workers}
+\author{Replication Package}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
+
+%===============================================================================
+\section{Figures}
+%===============================================================================
+
+%-------------------------------------------------------------------------------
+\subsection{Figure 1: Network Graph of Silicon Valley Outsourcing Relationships}
+%-------------------------------------------------------------------------------
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{output/figures/fig1_network.pdf}
+\caption{A Network Graph of Silicon Valley Outsourcing Relationships}
+\label{fig:network}
+\end{figure}
+
+\noindent\textsc{Note.} The arrows in this directed graph emanate from lead firms and are directed toward their subcontractor(s). Size is based upon the number of H-1B visas approved from 2009--2020. The largest sponsoring firm, Cognizant, received 170,144 H-1B visa approvals, and the smallest, Adobe, received 2,487.
+
+\FloatBarrier
+\newpage
+
+%-------------------------------------------------------------------------------
+\subsection{Figure 2: Wage Premium and Violations}
+%-------------------------------------------------------------------------------
+
+\noindent\textbf{Panel A. Post-2005 Kernel Density Estimate of Wage Premium over Relevant Wage Floor by Subcontractor/Lead Firm Status}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{output/figures/fig2a_kdensity.pdf}
+\label{fig:kdensity}
+\end{figure}
+
+\noindent\textsc{Note.} Epanechnikov kernel with bandwidth = \$5000. The vertical line at \$0 indicates the relevant prevailing wage for lead firms, or the higher of the relevant prevailing wage or the \$60,000 wage floor for subcontractors to avoid additional labor market tests for H-1B-dependent firms that was effective after Fiscal Year 2005.
+
+\vspace{1em}
+
+\noindent\textbf{Panel B. Probability of Violation as a Function of Wage Premium over Relevant Wage Floor by Subcontractor/Lead Firm Status}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{output/figures/fig2b_prob_viol.pdf}
+\label{fig:prob_viol}
+\end{figure}
+
+\FloatBarrier
+\newpage
+
+%-------------------------------------------------------------------------------
+\subsection{Figure 3: Average HHI and the Count of Violations}
+%-------------------------------------------------------------------------------
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{output/figures/fig3_hhibar.pdf}
+\caption{Average \textit{HHI} and the Count of Violations (0, 1--5, $>$ 5)}
+\label{fig:hhibar}
+\end{figure}
+
+\FloatBarrier
+\newpage
+
+%-------------------------------------------------------------------------------
+\subsection{Figure 4: Violations Intensity by HHI, Subcontractor Status, and Skill}
+%-------------------------------------------------------------------------------
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{output/figures/fig4_viol_intensity.pdf}
+\caption{Average Violations Intensity by Labor Market Concentration, Subcontractor Status, and Skill Level}
+\label{fig:viol_intensity}
+\end{figure}
+
+\noindent\textsc{Note.} We use the Department of Justice merger guidelines as categories for \textit{HHI} (least concentrated = less than or equal to 1000, moderate concentration = between 1000 and 1800, highly concentrated = over 1800), and combine skill levels 1 and 2 into ``low skill'' and 3 and 4 into ``high skill'' categories.
+
+\FloatBarrier
+\newpage
+
+%-------------------------------------------------------------------------------
+\subsection{Figure 5: Probabilities a Firm Has a Violation}
+%-------------------------------------------------------------------------------
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\textwidth]{output/figures/fig5_probs.pdf}
+\caption{Probabilities a Firm Has a Violation}
+\label{fig:probs}
+\end{figure}
+
+\FloatBarrier
+\newpage
+
+%-------------------------------------------------------------------------------
+\subsection{Figure 6: Wage-Setting Choices Facing the Monopsonist}
+%-------------------------------------------------------------------------------
+
+\textit{Note: Figure 6 is a theoretical model diagram that was manually created and is not reproducible via code. Please refer to the published paper for this figure.}
+
+\newpage
+
+%===============================================================================
+\section{Main Tables}
+%===============================================================================
+
+%-------------------------------------------------------------------------------
+\subsection{Table 1: Descriptive Statistics}
+%-------------------------------------------------------------------------------
+
+% Table 1 is generated with its own table environment
+\input{output/tables/table1.tex}
+
+\FloatBarrier
+\newpage
+
+%-------------------------------------------------------------------------------
+\subsection{Table 2: Wages, Skill Levels, and Subcontractor Status}
+%-------------------------------------------------------------------------------
+
+% Table 2 is generated with its own table environment
+\input{output/tables/table2.tex}
+
+\FloatBarrier
+\newpage
+
+%-------------------------------------------------------------------------------
+\subsection{Table 3: The Effect of Labor Market Power and Subcontractor Status on Log(1 + Violations per 1000 H-1Bs)}
+%-------------------------------------------------------------------------------
+
+% Table 3 is generated with its own table environment
+\input{output/tables/table3.tex}
+
+\FloatBarrier
+\newpage
+
+%-------------------------------------------------------------------------------
+\subsection{Table 4: Instrumental Variable: The Effect of Labor Market Power on Log(1 + Violations per 1000 H-1Bs)}
+%-------------------------------------------------------------------------------
+
+% Table 4 is generated with its own table environment
+\input{output/tables/table4.tex}
+
+\FloatBarrier
+\newpage
+
+%-------------------------------------------------------------------------------
+\subsection{Table 5: Marginal Effects: Changes in Probability}
+%-------------------------------------------------------------------------------
+
+% Panel A: Probability a Firm Ever Violates (Company-level)
+\input{output/tables/table5_panelA.tex}
+
+% Panel B: Probability a Firm Violates at time t (Panel)
+\input{output/tables/table5_panelB.tex}
+
+\FloatBarrier
+\newpage
+
+%-------------------------------------------------------------------------------
+\subsection{Table 6: Probabilities at Critical Values}
+%-------------------------------------------------------------------------------
+
+% Panel A: Probability a Firm Ever Violates - Company-level
+\input{output/tables/table6_panelA.tex}
+
+% Panel B: Probability of Violation at time t - Panel
+\input{output/tables/table6_panelB.tex}
+
+\FloatBarrier
+\newpage
+
+%===============================================================================
+\section{Appendix Tables}
+%===============================================================================
+
+\FloatBarrier
+%-------------------------------------------------------------------------------
+\subsection{Appendix Table 1: The Effect of Labor Market Power and Subcontractor Status on Wage and Hour Violations}
+%-------------------------------------------------------------------------------
+
+% Negative binomial regression - table has its own environment
+\input{output/tables/table_a1.tex}
+
+\newpage
+\FloatBarrier
+
+%-------------------------------------------------------------------------------
+\subsection{Appendix Table 2: The Effect of Labor Market Power on Log(1 + Violations per 1000 H-1Bs)}
+%-------------------------------------------------------------------------------
+
+% Panel A: Within Firm Ordinary Least Squares
+\input{output/tables/table_a2_panelA.tex}
+
+% Panel B: Between Firm Ordinary Least Squares
+\input{output/tables/table_a2_panelB.tex}
+
+\newpage
+\FloatBarrier
+
+%-------------------------------------------------------------------------------
+\subsection{Appendix Table 3: The Effect of Labor Market Power on Log(1 + Back Wages per 1000 H-1Bs)}
+%-------------------------------------------------------------------------------
+
+% Panel A: Within Firm Weighted Ordinary Least Squares
+\input{output/tables/table_a3_panelA.tex}
+
+% Panel B: Between Firm Weighted Ordinary Least Squares
+\input{output/tables/table_a3_panelB.tex}
+
+\newpage
+\FloatBarrier
+
+%-------------------------------------------------------------------------------
+\subsection{Appendix Table 4: The Effect of Labor Market Power and Subcontractor Status on Log(1 + Back Wages per 1000 H-1Bs)}
+%-------------------------------------------------------------------------------
+
+% Table has its own environment
+\input{output/tables/table_a4.tex}
+
+\newpage
+\FloatBarrier
+
+%-------------------------------------------------------------------------------
+\subsection{Appendix Table 5: The Effect of Labor Market Power on Log(1 + 1000(Back Wages / Wages Promised))}
+%-------------------------------------------------------------------------------
+
+% Panel A: Within Firm Ordinary Least Squares
+\input{output/tables/table_a5_panelA.tex}
+
+% Panel B: Between Firm Ordinary Least Squares
+\input{output/tables/table_a5_panelB.tex}
+
+\newpage
+\FloatBarrier
+
+%-------------------------------------------------------------------------------
+\subsection{Appendix Table 6: The Effect of Labor Market Power and Subcontractor Status on Log(1 + 1000(Back Wages / Wages Promised))}
+%-------------------------------------------------------------------------------
+
+% Note: table_a6.tex uses sidewaystable, so we input it directly
+\input{output/tables/table_a6.tex}
+
+\newpage
+\FloatBarrier
+
+%-------------------------------------------------------------------------------
+\subsection{Appendix Table 7: Occupation Defined Labor Market Level Analysis}
+%-------------------------------------------------------------------------------
+
+% Note: table_a7.tex uses sidewaystable, so we input it directly
+\input{output/tables/table_a7.tex}
+
+\newpage
+\FloatBarrier
+
+%-------------------------------------------------------------------------------
+\subsection{Appendix Table 8: Industry Defined Labor Market Level Analysis}
+%-------------------------------------------------------------------------------
+
+% Note: table_a8.tex uses sidewaystable, so we input it directly
+\input{output/tables/table_a8.tex}
+
+\newpage
+\FloatBarrier
+
+%-------------------------------------------------------------------------------
+\subsection{Appendix Table 9: The Effect of Labor Market Power on Log(1 + Violations per 1000 H-1Bs) (Unweighted)}
+%-------------------------------------------------------------------------------
+
+% Panel A: Within Firm Ordinary Least Squares
+\input{output/tables/table_a9_panelA.tex}
+
+% Panel B: Between Firm Ordinary Least Squares
+\input{output/tables/table_a9_panelB.tex}
+
+\newpage
+\FloatBarrier
+
+%-------------------------------------------------------------------------------
+\subsection{Appendix Table 10: The Effect of Labor Market Power and Subcontractor Status on Log(1 + Violations per 1000 H-1Bs)}
+%-------------------------------------------------------------------------------
+
+% Note: table_a10.tex uses sidewaystable, so we input it directly
+\input{output/tables/table_a10.tex}
+
+\newpage
+\FloatBarrier
+
+%-------------------------------------------------------------------------------
+\subsection{Appendix Table 11: The Effect of Labor Market Power on Log(1 + Back Wages per 1000 H-1Bs) (Unweighted)}
+%-------------------------------------------------------------------------------
+
+% Panel A: Within Firm Ordinary Least Squares
+\input{output/tables/table_a11_panelA.tex}
+
+% Panel B: Between Firm Ordinary Least Squares
+\input{output/tables/table_a11_panelB.tex}
+
+\newpage
+\FloatBarrier
+
+%-------------------------------------------------------------------------------
+\subsection{Appendix Table 12: The Effect of Labor Market Power and Subcontractor Status on Log(1 + Back Wages per 1000 H-1Bs)}
+%-------------------------------------------------------------------------------
+
+% Note: table_a12.tex uses sidewaystable, so we input it directly
+\input{output/tables/table_a12.tex}
+
+\FloatBarrier
+
+%===============================================================================
+\section{Replication Notes}
+%===============================================================================
+
+\subsection{Data and Sample}
+
+The analysis uses administrative data on H-1B visa petitions merged with Wage and Hour Division enforcement records. The main estimation sample consists of 1,237,750 observations at the firm-occupation-commuting zone-year level for firms with at least one violation during the sample period.
+
+\subsection{Key Variables}
+
+\begin{itemize}
+\item \texttt{logviol}: $\log\left(1 + 1000 \times \frac{\text{Violations}_{foct}}{\text{H1Bs}_{foct}}\right)$
+\item \texttt{logbw}: $\log\left(1 + 1000 \times \frac{\text{Back Wages}_{foct}}{\text{H1Bs}_{foct}}\right)$
+\item \texttt{logbwpw}: $\log\left(1 + 1000 \times \frac{\text{Back Wages}_{foct}}{\text{Wages Promised}_{foct}}\right)$
+\item \texttt{HHI}: Herfindahl-Hirschman Index (three-year rolling average), where 1 = monopsony and 0 = perfect competition
+\item \texttt{SUB}: Binary indicator for subcontractor firms (1) vs.\ lead firms (0)
+\end{itemize}
+
+\subsection{Software Requirements}
+
+\begin{itemize}
+\item Stata 16 or higher
+\item Required packages: \texttt{estout}, \texttt{reghdfe}, \texttt{ppmlhdfe}, \texttt{nwcommands}, \texttt{ivreg2}, \texttt{xtivreg2}
+\item \LaTeX\ distribution for PDF compilation
+\end{itemize}
+
+\subsection{Running the Replication}
+
+Execute the master do-file in Stata:
+\begin{verbatim}
+do code/00_master.do
+\end{verbatim}
+
+This will generate all tables in \texttt{output/tables/} and figures in \texttt{output/figures/}, then compile this document.
+
+\vspace{2em}
+\hrule
+\vspace{0.5em}
+\begin{center}
+\textit{Replication package created: February 2026}
+\end{center}
+
+\end{document}
