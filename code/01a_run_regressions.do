@@ -220,16 +220,16 @@ areg logviol hhithreeyearavg logh1bs i.year i.occ2 [fw=fw_h1bs], absorb(company)
 est save $sters/tablea2a_col4.ster, replace
 
 * Panel B: Random Effects (Pooled OLS)
-reg logviol hhithreeyearavg logh1bs [fw=fw_h1bs], vce(cluster cz90)
+areg logviol hhithreeyearavg logh1bs [fw=fw_h1bs], vce(cluster cz90) absorb(cz90)
 est save $sters/tablea2b_col1.ster, replace
 
-reg logviol hhithreeyearavg logh1bs i.year [fw=fw_h1bs], vce(cluster cz90)
+areg logviol hhithreeyearavg logh1bs [fw=fw_h1bs], vce(cluster cz90) absorb(cz90 year)
 est save $sters/tablea2b_col2.ster, replace
 
-reg logviol hhithreeyearavg logh1bs i.occ2 [fw=fw_h1bs], vce(cluster cz90)
+areg logviol hhithreeyearavg logh1bs [fw=fw_h1bs], vce(cluster cz90) absorb(cz90 occ2)
 est save $sters/tablea2b_col3.ster, replace
 
-reg logviol hhithreeyearavg logh1bs i.year i.occ2 [fw=fw_h1bs], vce(cluster cz90)
+areg logviol hhithreeyearavg logh1bs [fw=fw_h1bs], vce(cluster cz90) absorb(cz90 occ2 year)
 est save $sters/tablea2b_col4.ster, replace
 
 di "Table A.2: 8 .ster files saved"
@@ -254,16 +254,16 @@ areg logbw hhithreeyearavg logh1bs i.year i.occ2 [fw=fw_h1bs], absorb(company) v
 est save $sters/tablea3a_col4.ster, replace
 
 * Panel B: Random Effects (Pooled OLS)
-reg logbw hhithreeyearavg logh1bs [fw=fw_h1bs], vce(cluster cz90)
+areg logbw hhithreeyearavg logh1bs [fw=fw_h1bs], vce(cluster cz90) absorb(cz90)
 est save $sters/tablea3b_col1.ster, replace
 
-reg logbw hhithreeyearavg logh1bs i.year [fw=fw_h1bs], vce(cluster cz90)
+areg logbw hhithreeyearavg logh1bs [fw=fw_h1bs], vce(cluster cz90) absorb(cz90 year)
 est save $sters/tablea3b_col2.ster, replace
 
-reg logbw hhithreeyearavg logh1bs i.occ2 [fw=fw_h1bs], vce(cluster cz90)
+areg logbw hhithreeyearavg logh1bs [fw=fw_h1bs], vce(cluster cz90) absorb(cz90 occ2)
 est save $sters/tablea3b_col3.ster, replace
 
-reg logbw hhithreeyearavg logh1bs i.year i.occ2 [fw=fw_h1bs], vce(cluster cz90)
+areg logbw hhithreeyearavg logh1bs [fw=fw_h1bs], vce(cluster cz90) absorb(cz90 occ2 year)
 est save $sters/tablea3b_col4.ster, replace
 
 di "Table A.3: 8 .ster files saved"
@@ -322,17 +322,17 @@ est save $sters/tablea5a_col3.ster, replace
 areg logbwpw hhithreeyearavg logh1bs i.year i.occ2, absorb(company) vce(robust)
 est save $sters/tablea5a_col4.ster, replace
 
-* Panel B: Between Firm OLS (xtreg RE)
-xtreg logbwpw hhithreeyearavg logh1bs, re
+* Panel B: Between Firm OLS
+areg logbwpw hhithreeyearavg logh1bs, vce(cluster cz90) absorb(cz90)
 est save $sters/tablea5b_col1.ster, replace
 
-xtreg logbwpw hhithreeyearavg logh1bs i.year, re
+areg logbwpw hhithreeyearavg logh1bs i.year, vce(cluster cz90) absorb(cz90 year)
 est save $sters/tablea5b_col2.ster, replace
 
-xtreg logbwpw hhithreeyearavg logh1bs i.occ2, re
+areg logbwpw hhithreeyearavg logh1bs, vce(cluster cz90) absorb(cz90 occ2)
 est save $sters/tablea5b_col3.ster, replace
 
-xtreg logbwpw hhithreeyearavg logh1bs i.year i.occ2, re
+areg logbwpw hhithreeyearavg logh1bs, vce(cluster cz90) absorb(cz90 occ2 year)
 est save $sters/tablea5b_col4.ster, replace
 
 di "Table A.5: 8 .ster files saved"
@@ -474,16 +474,16 @@ areg logviol hhithreeyearavg logh1bs i.year i.occ2, absorb(company) vce(cluster 
 est save $sters/tablea9a_col4.ster, replace
 
 * Panel B: Random Effects (Pooled OLS)
-reg logviol hhithreeyearavg logh1bs, vce(cluster cz90)
+areg logviol hhithreeyearavg logh1bs, vce(cluster cz90) absorb(cz90)
 est save $sters/tablea9b_col1.ster, replace
 
-reg logviol hhithreeyearavg logh1bs i.year, vce(cluster cz90)
+areg logviol hhithreeyearavg logh1bs, vce(cluster cz90) absorb(cz90 year)
 est save $sters/tablea9b_col2.ster, replace
 
-reg logviol hhithreeyearavg logh1bs i.occ2, vce(cluster cz90)
+areg logviol hhithreeyearavg logh1bs, vce(cluster cz90) absorb(cz90 occ2)
 est save $sters/tablea9b_col3.ster, replace
 
-reg logviol hhithreeyearavg logh1bs i.year i.occ2 i.cz90, vce(cluster cz90)
+areg logviol hhithreeyearavg logh1bs i.year, vce(cluster cz90) absorb(cz90 occ2 year)
 est save $sters/tablea9b_col4.ster, replace
 
 di "Table A.9: 8 .ster files saved"
@@ -546,31 +546,21 @@ areg logbw hhithreeyearavg logh1bs i.year i.occ2, absorb(company) vce(cluster cz
 est save $sters/tablea11a_col4.ster, replace
 
 * Panel B: Random Effects (with CZ FE)
-* Uses _rmcoll to remove collinear CZ dummies (same as original code)
-local ivs "hhithreeyearavg logh1bs"
-
+	
 * Column 1: CZ FE only
-local rhs1 "`ivs' i.cz90"
-_rmcoll `rhs1' if logbw > 0, expand
-reg logbw `r(varlist)', vce(cluster cz90)
+areg logbw hhithreeyearavg logh1bs, vce(cluster cz90) absorb(cz90)
 est save $sters/tablea11b_col1.ster, replace
 
 * Column 2: Year + CZ FE
-local rhs2 "`ivs' i.year i.cz90"
-_rmcoll `rhs2' if logbw > 0, expand
-reg logbw `r(varlist)', vce(cluster cz90)
+areg logbw hhithreeyearavg logh1bs, vce(cluster cz90) absorb(cz90 year)
 est save $sters/tablea11b_col2.ster, replace
 
 * Column 3: Occ + CZ FE
-local rhs3 "`ivs' i.occ2 i.cz90"
-_rmcoll `rhs3' if logbw > 0, expand
-reg logbw `r(varlist)', vce(cluster cz90)
+areg logbw hhithreeyearavg logh1bs, vce(cluster cz90) absorb(cz90 occ2)
 est save $sters/tablea11b_col3.ster, replace
 
 * Column 4: Year + Occ + CZ FE
-local rhs4 "`ivs' i.year i.occ2 i.cz90"
-_rmcoll `rhs4' if logbw > 0, expand
-reg logbw `r(varlist)', vce(cluster cz90)
+areg logbw hhithreeyearavg logh1bs, vce(cluster cz90) absorb(cz90 year occ2)
 est save $sters/tablea11b_col4.ster, replace
 
 di "Table A.11: 8 .ster files saved"

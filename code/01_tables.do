@@ -71,19 +71,6 @@
 
 	*-------------------------------------------------------------------------------
 	* TABLE 1: DESCRIPTIVE STATISTICS
-	* Source: dos/descriptives.do lines 36-67
-	*
-	* Paper Table 1 has TWO panels:
-	*   - Panel A: Full Sample (N = 1,353,017)
-	*   - Panel B: Firms with Violations / FE Sample (N = 25,683)
-	*
-	* Variables (NO Unemployment Rate - not in published paper):
-	*   - Violations
-	*   - % of Cells with any Violations
-	*   - Back Wages
-	*   - Number of H-1Bs
-	*   - HHI
-	*   - Subcontractor
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE 1: DESCRIPTIVE STATISTICS ====="
@@ -207,7 +194,6 @@
 
 	*-------------------------------------------------------------------------------
 	* TABLE 2: WAGES, SKILL LEVELS, AND SUBCONTRACTOR STATUS
-	* Source: 2019_find_pay_rates.do lines 219-288
 	*
 	* DV: Wage (in dollars)
 	* IVs: HHI category (Moderate/High vs Low), Skill level (2-4 vs 1), Log(H-1Bs), Subcontractor
@@ -218,14 +204,6 @@
 	*   Col 4: Commuting Zone FE, cluster by CZ
 	*   Col 5: Year + CZ FE, cluster by CZ
 	*   Col 6: Year + Occupation FE, cluster by CZ
-	*
-	* EXPECTED COEFFICIENTS (Moderate HHI row):
-	*   Col 1: -191.6, Col 2: -721.9, Col 3: -1466.4, Col 4: 755.6, Col 5: -3.464, Col 6: -1344.6
-	*
-	* REQUIRED EXTERNAL DATA:
-	*   - h1b_hhi/2019_cz90_name_occ2.dta (wage level data from H-1B LCA filings)
-	*   This file must be merged with master_db.dta to provide wage_level variable
-	*   Run prepare_replication_data.do first to create the merged dataset
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE 2: WAGES, SKILL LEVELS, SUBCONTRACTOR STATUS ====="
@@ -440,13 +418,9 @@
 
 	*-------------------------------------------------------------------------------
 	* TABLE 4: IV REGRESSION - LOG(VIOLATIONS)
-	* Source: dos/iv_regs_aug_25.do
 	* DV: Log(1+1000*(Violations/H1Bs))
 	* Method: Instrumental Variables (2SLS)
 	* Instrument: Lagged HHI from prior year
-	*
-	* EXPECTED HHI coefficients: -0.247***, -0.230***, -0.350***, -0.257***,
-	*                            -0.364***, -0.304***, -0.236***, -0.308***
 	*
 	* Fixed Effects by Column:
 	*   Col 1: No FE
@@ -457,9 +431,6 @@
 	*   Col 6: Year + Occ FE
 	*   Col 7: Year + CZ FE
 	*   Col 8: Year + Occ + CZ FE
-	*
-	* STER files: table4_col1.ster through table4_col8.ster
-	* Verified: All 8 columns match paper exactly (Feb 2026)
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE 4: IV REGRESSION - LOG(VIOLATIONS) ====="
@@ -543,9 +514,6 @@
 
 	*-------------------------------------------------------------------------------
 	* TABLE A1: NEGATIVE BINOMIAL REGRESSION
-	* Source: obes_dos/obes_pub_tables.do lines 251-362
-	* Verified: All 7 columns match paper exactly
-	*
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE A1: NEGATIVE BINOMIAL REGRESSIONS ====="
@@ -634,7 +602,6 @@
 
 	*-------------------------------------------------------------------------------
 	* TABLE 5: MARGINAL EFFECTS - CHANGES IN PROBABILITY
-	* Source: 01a_run_regressions.do (probit models)
 	*
 	* Panel A: Change in Probability a Firm Ever Violates (company-level probit)
 	* Panel B: Change in Probability a Firm Violates at t (panel probit)
@@ -652,7 +619,6 @@
 
 	*-------------------------------------------------------------------------------
 	* TABLE 6 (5b): MARGINAL EFFECTS - PROBABILITIES AT CRITICAL VALUES
-	* Source: 01a_run_regressions.do (probit models)
 	*
 	* Panel A: Probability a Firm Ever Violates
 	* Panel B: Probability a Firm Violates at time t
@@ -668,14 +634,9 @@
 
 	*-------------------------------------------------------------------------------
 	* TABLE A.2: WEIGHTED REGRESSIONS - LOG(VIOLATIONS)
-	* Source: 01a_run_regressions.do (pre-computed .ster files)
 	*
 	* Panel A: Within Firm Ordinary Least Squares (Firm Fixed Effects)
 	* Panel B: Between Firm Ordinary Least Squares (Pooled OLS)
-	*
-	* Paper shows:
-	*   Panel A: N = 4,746,563, HHI coefficients: -0.0999**, -0.0377, -0.106**, -0.0463
-	*   Panel B: N = 4,746,573, HHI coefficients: -0.118**, -0.0718*, -0.108**, -0.0708*
 	*
 	* STER files: tablea2a_col1-4.ster (Panel A), tablea2b_col1-4.ster (Panel B)
 	*-------------------------------------------------------------------------------
@@ -720,7 +681,7 @@
 	estadd local Firm "Y"
 
 	* Output formatting for Panel A
-	local title "Firm, Occupation Level: Within Firm OLS: DV: Log(1+ 1000*(Violations/H1Bs))"
+	local title "Within Firm OLS: DV: Log(1+ 1000*(Violations/H1Bs))"
 	local rename "rename(hhithreeyearavg HHI logh1bs log(H1Bs))"
 	local keeps "HHI log(H1Bs)"
 	local stuff "numbers label cells(b(fmt(a3) star) se(fmt(a3) par)) starlevels(* 0.1 ** 0.05 *** 0.01)"
@@ -747,50 +708,41 @@
 	est sto tabF1
 	estadd local Year "N"
 	estadd local Occ "N"
-	estadd local Firm "Y"
+	estadd local CommmutingZone "Y"
 
 	est use $sters/tablea2b_col2.ster
 	qui est replay
 	est sto tabF2
 	estadd local Year "Y"
 	estadd local Occ "N"
-	estadd local Firm "Y"
+	estadd local CommmutingZone "Y"
 
 	est use $sters/tablea2b_col3.ster
 	qui est replay
 	est sto tabF3
 	estadd local Year "N"
 	estadd local Occ "Y"
-	estadd local Firm "Y"
+	estadd local CommmutingZone "Y"
 
 	est use $sters/tablea2b_col4.ster
 	qui est replay
 	est sto tabF4
 	estadd local Year "Y"
 	estadd local Occ "Y"
-	estadd local Firm "Y"
+	estadd local CommmutingZone "Y"
 
 	* Output formatting for Panel B - must rebuild prehead and addons with new title
-	local title "Firm, Occupation Level: Between Firm OLS: DV: Log(1+ 1000*(Violations/H1Bs))"
+	local title "Between Firm OLS: DV: Log(1+ 1000*(Violations/H1Bs))"
 	local prehead "prehead(\begin{table}\centering \caption{`title'}\centering\medskip \begin{tabular}{lccccc} \hline \hline) mlabels(none)"
 	local addons "`prehead' style(tex) `stuff' substitute(r2 R-Squared _ \_) `postfoot'"
 
 	estout tabF* using $tables/table_a2_panelB.tex, replace `rename' keep(`keeps') order(`keeps') `addons' ///
-	  prefoot(\hline) stats(Year Occ Firm r2 N, fmt(%9.2gc %9.2f %9.2f %9.2f %9.0fc))
+	  prefoot(\hline) stats(Year Occ CommmutingZone r2 N, fmt(%9.2gc %9.2f %9.2f %9.2f %9.0fc))
 
 	di "Table A.2 Panel B saved to: $tables/table_a2_panelB.tex"
 
 	*-------------------------------------------------------------------------------
 	* TABLE A.3: WEIGHTED REGRESSIONS - LOG(BACK WAGES)
-	* Source: 01a_run_regressions.do (pre-computed .ster files)
-	*
-	* Panel A: Within Firm Ordinary Least Squares (Firm Fixed Effects)
-	* Panel B: Between Firm Ordinary Least Squares (Pooled OLS)
-	*
-	* Paper shows:
-	*   Panel A: N = 4,746,618, HHI coefficients: -0.174**, -0.0395, -0.169*, -0.0416
-	*   Panel B: N = 4,746,573, HHI coefficients: -0.210**, -0.118, -0.188**, -0.0870
-	*
 	* STER files: tablea3a_col1-4.ster (Panel A), tablea3b_col1-4.ster (Panel B)
 	*-------------------------------------------------------------------------------
 
@@ -834,7 +786,7 @@
 	estadd local Firm "Y"
 
 	* Output formatting for Panel A
-	local title "Firm, Occupation Level: Within Firm OLS: DV: Log(1+1000*(Back Wages/H1Bs))"
+	local title "Within Firm OLS: DV: Log(1+1000*(Back Wages/H1Bs))"
 	local rename "rename(hhithreeyearavg HHI logh1bs log(H1Bs))"
 	local keeps "HHI log(H1Bs)"
 	local stuff "numbers label cells(b(fmt(a3) star) se(fmt(a3) par)) starlevels(* 0.1 ** 0.05 *** 0.01)"
@@ -861,65 +813,40 @@
 	est sto tabH1
 	estadd local Year "N"
 	estadd local Occ "N"
-	estadd local Firm "Y"
+	estadd local CommmutingZone "Y"
 
 	est use $sters/tablea3b_col2.ster
 	qui est replay
 	est sto tabH2
 	estadd local Year "Y"
 	estadd local Occ "N"
-	estadd local Firm "Y"
+	estadd local CommmutingZone "Y"
 
 	est use $sters/tablea3b_col3.ster
 	qui est replay
 	est sto tabH3
 	estadd local Year "N"
 	estadd local Occ "Y"
-	estadd local Firm "Y"
+	estadd local CommmutingZone "Y"
 
 	est use $sters/tablea3b_col4.ster
 	qui est replay
 	est sto tabH4
 	estadd local Year "Y"
 	estadd local Occ "Y"
-	estadd local Firm "Y"
+	estadd local CommmutingZone "Y"
 
-	* Output formatting for Panel B - must rebuild prehead and addons with new title
-	local title "Firm, Occupation Level: Between Firm OLS: DV: Log(1+1000*(Back Wages/H1Bs))"
+	local title "Between Firm OLS: DV: Log(1+1000*(Back Wages/H1Bs))"
 	local prehead "prehead(\begin{table}\centering \caption{`title'}\centering\medskip \begin{tabular}{lccccc} \hline \hline) mlabels(none)"
 	local addons "`prehead' style(tex) `stuff' substitute(r2 R-Squared _ \_) `postfoot'"
 
 	estout tabH* using $tables/table_a3_panelB.tex, replace `rename' keep(`keeps') order(`keeps') `addons' ///
-	  prefoot(\hline) stats(Year Occ Firm r2 N, fmt(%9.2gc %9.2f %9.2f %9.2f %9.0fc))
+	  prefoot(\hline) stats(Year Occ CommmutingZone r2 N, fmt(%9.2gc %9.2f %9.2f %9.2f %9.0fc))
 
 	di "Table A.3 Panel B saved to: $tables/table_a3_panelB.tex"
 
 	*-------------------------------------------------------------------------------
 	* TABLE A.4: UNWEIGHTED REGRESSIONS - LOG(BACK WAGES)
-	* Source: dos/pub_tables.do, obes_dos/obes_firmlevel_table.do
-	* Original tex: pubtable3.tex (combines multiple source tables)
-	* Verified: All 7 columns match paper Appendix Table 4 exactly
-	*
-	* Column mapping:
-	*   Col 1: table4b col 4 (RE OLS) - HHI = -0.0178*
-	*   Col 2: foialogbw_reg_hhix_catset3 col 8 (with interaction) - HHI = 0.00296
-	*   Col 3: table4a col 4 (FE OLS) - HHI = -0.0213
-	*   Col 4: fenonsub_table5b_a col 3 (Lead Firms, FE, Occ) - HHI = -0.0132**
-	*   Col 5: fenonsub_table5b_a col 4 (Lead Firms, FE, Year+Occ) - HHI = -0.00657
-	*   Col 6: fesub_table5b_a col 3 (Subcontractors, FE, Occ) - HHI = -0.229***
-	*   Col 7: fesub_table5b_a col 4 (Subcontractors, FE, Year+Occ) - HHI = -0.0853
-	*
-	* STER files: tablea4_col1.ster through tablea4_col7.ster
-	* Original STER file names:
-	*   Col 1: firmreolslogbwD3wt2.ster
-	*   Col 2: foiareg_3_logbw_8_hhix.ster
-	*   Col 3: firmfeolslogbwD3wt2.ster
-	*   Col 4: firmfenonsubolslogbwC3wt2.ster
-	*   Col 5: firmfenonsubolslogbwD3wt2.ster
-	*   Col 6: firmfesubolslogbwC3wt2.ster
-	*   Col 7: firmfesubolslogbwD3wt2.ster
-	*-------------------------------------------------------------------------------
-	* COMMENTED-OUT CODE TO REPRODUCE FROM SCRATCH:
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE A.4: UNWEIGHTED LOG(BACK WAGES) ====="
@@ -1034,42 +961,11 @@
 
 	*-------------------------------------------------------------------------------
 	* TABLE A.5: WEIGHTED REGRESSIONS - LOG(BACK WAGES/PROMISED WAGES)
-	*
-	* Panel A: Within Firm Ordinary Least Squares (Firm Fixed Effects)
-	* Panel B: Between Firm Ordinary Least Squares (Pooled OLS with CZ FE)
-	*
-	* Paper shows:
-	*   Panel A: N = 1,351,775, HHI coefficients: -0.0173***, -0.00821***, -0.0164***, -0.00782***
-	*   Panel B: N = 1,351,786, HHI coefficients: -0.00957***, -0.00444***, -0.00969***, -0.00415***
-	*
-	* ROOT CAUSE OF ORIGINAL FAILURE:
-	* The original code used [fw=fw_h1bs] (frequency weights), which caused Stata to report
-	* N = sum of weights (4.7M) instead of observation count (1.35M).
-	* The paper used analytical weights [aw=nbr_h1bs] which reports actual N.
-	*
-	* SOLUTION: Use original .ster files that match the paper exactly.
-	* These files were created with analytical weights and produce exact matches.
-	* Files: tablea5a_col[1-4].ster (Panel A), tablea5b_col[1-4].ster (Panel B)
-	*
 	*-------------------------------------------------------------------------------
-	* COMMENTED-OUT CODE TO REPRODUCE FROM SCRATCH:
-	* Uncomment this section if you want to regenerate the regressions instead of
-	* loading .ster files. Uses analytical weights [aw=nbr_h1bs] to match paper.
-	*
-	* NOTE: This code has NOT been verified to produce exact matches. The .ster
-	* files are the authoritative source for the paper's results.
-	*-------------------------------------------------------------------------------
-	*-------------------------------------------------------------------------------
-
-	di "===== TABLE A.5: LOADING ORIGINAL STER FILES FOR LOG(BW/PW) ====="
 
 	*-------------------------------------------------------------------------------
 	* PANEL A: Within Firm Ordinary Least Squares (Firm Fixed Effects)
-	* Uses analytical weights [aw=nbr_h1bs] with firm FE absorbed
-	* Files: tablea5a_col1.ster through tablea5a_col4.ster
 	*-------------------------------------------------------------------------------
-
-	di "===== TABLE A.5 PANEL A: WITHIN FIRM OLS (FIRM FE) ====="
 
 	estimates clear
 
@@ -1137,8 +1033,6 @@
 
 	*-------------------------------------------------------------------------------
 	* PANEL B: Between Firm Ordinary Least Squares (Pooled OLS with CZ clustering)
-	* Uses analytical weights [aw=nbr_h1bs] with CZ FE
-	* Files: tablea5b_col1.ster through tablea5b_col4.ster
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE A.5 PANEL B: BETWEEN FIRM OLS ====="
@@ -1199,32 +1093,12 @@
 	local addons "`prehead' style(tex) `stuff' substitute(r2 R-Squared _ \_) `postfoot'"
 
 	estout tabK* using $tables/table_a5_panelB.tex, replace `rename' keep(`keeps') order(`keeps') `addons' ///
-	  prefoot(\hline) stats(Year Occ CZ N, fmt(%9.2gc %9.0fc) label("Year" "Occ" "Commuting Zone" "N"))
+	  prefoot(\hline) stats(Year Occ CZ r2 N, fmt(%9.2gc %9.2gc %9.2gc %9.2gc %9.0fc) label("Year" "Occ" "Commuting Zone" "N"))
 
 	di "Table A.5 Panel B saved to: $tables/table_a5_panelB.tex"
 
 	*-------------------------------------------------------------------------------
 	* TABLE A.6: CELL-LEVEL OLS WITH HHI×SUBCONTRACTOR - LOG(BACK WAGES/PROMISED WAGES)
-	* Source: dos/run_regs.do (generates foiareg_3_logbwpw_*_hhix.ster files)
-	* Original tex: foialogbwpw_reg_hhix_catset3.tex
-	* Verified: All 8 columns match paper Appendix Table 6
-	*
-	* HHI coefficients:
-	*   Col 1: -0.00562*** (No FE)
-	*   Col 2: 0.0000605   (Year)
-	*   Col 3: -0.00541*** (Occ)
-	*   Col 4: -0.00249**  (CZ)
-	*   Col 5: -0.00446*** (Occ+CZ)
-	*   Col 6: 0.000673    (Year+Occ)
-	*   Col 7: 0.00689***  (Year+CZ)
-	*   Col 8: 0.00487**   (Year+Occ+CZ)
-	*
-	* N = 1,351,786 (col 1,3) or 1,351,602 (cols with Year FE)
-	*
-	* STER files: tablea6_col1.ster through tablea6_col8.ster
-	* (Original names: foiareg_3_logbwpw_1_hhix.ster through foiareg_3_logbwpw_8_hhix.ster)
-	*-------------------------------------------------------------------------------
-	* COMMENTED-OUT CODE TO REPRODUCE FROM SCRATCH:
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE A.6: CELL-LEVEL OLS LOG(BACK WAGES/PROMISED WAGES) ====="
@@ -1338,27 +1212,6 @@
 
 	*-------------------------------------------------------------------------------
 	* TABLE A.7: CELL-LEVEL OLS - LOG(VIOLATIONS) - OCCUPATION-CZ-YEAR LEVEL
-	* Source: dos/table_fx.do (calls table_fx logviol 2 reg hhi)
-	* Original tex: foialogviol_reg_hhi_catset2.tex
-	* Verified: All 8 columns match paper Appendix Table 7
-	*
-	* HHI coefficients:
-	*   Col 1: -0.760*** (No FE)
-	*   Col 2: -0.712*** (Year)
-	*   Col 3: -0.778*** (Occ)
-	*   Col 4: -0.409*** (CZ)
-	*   Col 5: -0.227*** (Occ+CZ)
-	*   Col 6: -0.732*** (Year+Occ)
-	*   Col 7: -0.332*** (Year+CZ)
-	*   Col 8: -0.162**  (Year+Occ+CZ)
-	*
-	* N = 51,330
-	*
-	* STER files: tablea7_col1.ster through tablea7_col8.ster
-	* (Original names: foiareg_2_logviol_1_hhi.ster through foiareg_2_logviol_8_hhi.ster)
-	*-------------------------------------------------------------------------------
-	* COMMENTED-OUT CODE TO REPRODUCE FROM SCRATCH:
-	* Note: Uses category_set==2 (Occupation-CZ-Year level, NOT Firm level)
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE A.7: CELL-LEVEL OLS LOG(VIOLATIONS) - OCC-CZ-YEAR LEVEL ====="
@@ -1472,24 +1325,6 @@
 
 	*-------------------------------------------------------------------------------
 	* TABLE A.8: CELL-LEVEL OLS - LOG(VIOLATIONS) - INDUSTRY-CZ-YEAR LEVEL
-	* Source: dos/table_fx.do (calls table_fx logviol 1 reg hhi)
-	* Original tex: foialogviol_reg_hhi_catset1.tex
-	* Verified: All 8 columns match paper Appendix Table 8
-	*
-	* HHI coefficients:
-	*   Col 1: -0.108*** (No FE)
-	*   Col 2: -0.0825** (Year)
-	*   Col 3: -0.144*** (Industry)
-	*   Col 4: 0.0160    (CZ)
-	*   Col 5: 0.0436    (Industry+CZ)
-	*   Col 6: -0.155*** (Year+Industry)
-	*   Col 7: 0.0521    (Year+CZ)
-	*   Col 8: 0.0153    (Year+Industry+CZ)
-	*
-	* N = 50,062
-	*
-	* STER files: tablea8_col1.ster through tablea8_col8.ster
-	* (Original names: foiareg_1_logviol_1_hhi.ster through foiareg_1_logviol_8_hhi.ster)
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE A.8: CELL-LEVEL OLS LOG(VIOLATIONS) - INDUSTRY-CZ-YEAR LEVEL ====="
@@ -1604,17 +1439,6 @@
 
 	*-------------------------------------------------------------------------------
 	* TABLE A.9: UNWEIGHTED FIRM-LEVEL REGRESSIONS - LOG(VIOLATIONS)
-	* Source: 01a_run_regressions.do (pre-computed .ster files)
-	*
-	* Panel A: Within Firm Ordinary Least Squares (Firm Fixed Effects) - UNWEIGHTED
-	* Panel B: Between Firm Ordinary Least Squares - UNWEIGHTED
-	*
-	* Paper shows:
-	*   Panel A (Firm FE) HHI coefficients: -0.0233** -0.0131** -0.0227** -0.0129*
-	*   Panel B (RE) HHI coefficients: -0.0187*** -0.0122** -0.0197*** -0.0120**
-	*   N = 1,237,741 (Panel A), 1,237,750 (Panel B)
-	*
-	* STER files: tablea9a_col1-4.ster (Panel A), tablea9b_col1-4.ster (Panel B)
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE A.9: LOADING FROM PRE-COMPUTED .STER FILES ====="
@@ -1707,29 +1531,12 @@
 	local addons "`prehead' style(tex) `stuff' substitute(r2 R-Squared _ \_) `postfoot'"
 
 	estout tabP* using $tables/table_a9_panelB.tex, replace `rename' keep(`keeps') order(`keeps') `addons' ///
-	  prefoot(\hline) stats(Year Occ CZ r2 N, fmt(%9.2gc %9.2f %9.2fc %9.0fc) label("Year" "Occ" "Commuting Zone" "R-Squared" "N"))
+	  prefoot(\hline) stats(Year Occ CZ r2 N, fmt(%9.2gc %9.2f %9.2f %9.0fc) label("Year" "Occ" "Commuting Zone" "R-Squared" "N"))
 
 	di "Table A.9 Panel B saved to: $tables/table_a9_panelB.tex"
 
 	*-------------------------------------------------------------------------------
 	* TABLE A.10: CELL-LEVEL OLS WITH HHI×SUBCONTRACTOR - LOG(VIOLATIONS)
-	* Source: dos/run_regs.do
-	* Original tex: foialogviol_reg_hhix_catset3.tex
-	* Verified: All 8 columns match paper Appendix Table 10
-	*
-	* HHI coefficients:
-	*   Col 1: -0.0102*** (No FE)
-	*   Col 2: -0.00284   (Year)
-	*   Col 3: -0.0108*** (Occ)
-	*   Col 4: -0.00664***(CZ)
-	*   Col 5: -0.0126*** (Occ+CZ)
-	*   Col 6: -0.00261   (Year+Occ)
-	*   Col 7: 0.00721*   (Year+CZ)
-	*   Col 8: 0.00164    (Year+Occ+CZ)
-	*
-	* N = 1,237,779
-	*
-	* STER files: tablea10_col1.ster through tablea10_col8.ster
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE A.10: CELL-LEVEL OLS LOG(VIOLATIONS) WITH HHI×SUB ====="
@@ -1806,17 +1613,6 @@
 
 	*-------------------------------------------------------------------------------
 	* TABLE A.11: UNWEIGHTED FIRM-LEVEL REGRESSIONS - LOG(BACK WAGES)
-	* Source: 01a_run_regressions.do (pre-computed .ster files)
-	*
-	* Panel A: Within Firm Ordinary Least Squares (Firm Fixed Effects) - UNWEIGHTED
-	* Panel B: Between Firm Ordinary Least Squares (with CZ FE) - UNWEIGHTED
-	*
-	* Paper shows:
-	*   Panel A (Firm FE) HHI coefficients: -0.0481** -0.0247* -0.0432** -0.0213
-	*   Panel B (RE) HHI coefficients: -0.0386*** -0.0251*** -0.0384*** -0.0178*
-	*   N = 1,237,741 (Panel A), 1,237,750 (Panel B)
-	*
-	* STER files: tablea11a_col1-4.ster (Panel A), tablea11b_col1-4.ster (Panel B)
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE A.11: LOADING FROM PRE-COMPUTED .STER FILES ====="
@@ -1881,57 +1677,40 @@
 	est sto tabS1
 	estadd local Year "N"
 	estadd local Occ "N"
-	estadd local Firm "Y"
+	estadd local CZ "Y"
 
 	est use $sters/tablea11b_col2.ster
 	qui est replay
 	est sto tabS2
 	estadd local Year "Y"
 	estadd local Occ "N"
-	estadd local Firm "Y"
+	estadd local CZ "Y"
 
 	est use $sters/tablea11b_col3.ster
 	qui est replay
 	est sto tabS3
 	estadd local Year "N"
 	estadd local Occ "Y"
-	estadd local Firm "Y"
+	estadd local CZ "Y"
 
 	est use $sters/tablea11b_col4.ster
 	qui est replay
 	est sto tabS4
 	estadd local Year "Y"
 	estadd local Occ "Y"
-	estadd local Firm "Y"
+	estadd local CZ "Y"
 
 	local title "Firm, Occupation Level: Between Firm OLS (Unweighted): DV: Log(1+1000*(Back Wages/H1Bs))"
 	local prehead "prehead(\begin{table}\centering \caption{`title'}\centering\medskip \begin{tabular}{lccccc} \hline \hline) mlabels(none)"
 	local addons "`prehead' style(tex) `stuff' substitute(r2 R-Squared _ \_) `postfoot'"
 
 	estout tabS* using $tables/table_a11_panelB.tex, replace `rename' keep(`keeps') order(`keeps') `addons' ///
-	  prefoot(\hline) stats(Year Occ CZ r2 N, fmt(%9.2gc %9.2f %9.2fc %9.0fc) label("Year" "Occ" "Commuting Zone" "R-Squared" "N"))
+	  prefoot(\hline) stats(Year Occ CZ r2 N, fmt(%9.2gc %9.2f %9.2f %9.0fc) label("Year" "Occ" "Commuting Zone" "R-Squared" "N"))
 
 	di "Table A.11 Panel B saved to: $tables/table_a11_panelB.tex"
 
 	*-------------------------------------------------------------------------------
 	* TABLE A.12: CELL-LEVEL OLS WITH HHI×SUBCONTRACTOR - LOG(BACK WAGES)
-	* Source: dos/run_regs.do
-	* Original tex: foialogbw_reg_hhix_catset3.tex
-	* Verified: All 8 columns match paper Appendix Table 12
-	*
-	* HHI coefficients:
-	*   Col 1: -0.0271*** (No FE)
-	*   Col 2: -0.0118**  (Year)
-	*   Col 3: -0.0260*** (Occ)
-	*   Col 4: -0.0192*** (CZ)
-	*   Col 5: -0.0258*** (Occ+CZ)
-	*   Col 6: -0.00963*  (Year+Occ)
-	*   Col 7: 0.00943    (Year+CZ)
-	*   Col 8: 0.00296    (Year+Occ+CZ)
-	*
-	* N = 1,237,779
-	*
-	* STER files: tablea12_col1.ster through tablea12_col8.ster
 	*-------------------------------------------------------------------------------
 
 	di "===== TABLE A.12: CELL-LEVEL OLS LOG(BACK WAGES) WITH HHI×SUB ====="

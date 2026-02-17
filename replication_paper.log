@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  16 FEB 2026 19:20
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.4.7)  17 FEB 2026 06:59
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -462,20 +462,8 @@ Package pdftex.def Info: output/figures/fig5_probs.pdf  used on input line 114.
 (./output/tables/table6_panelB.tex) [18] (./output/tables/table_a1.tex)
 [19] [20] (./output/tables/table_a2_panelA.tex)
 (./output/tables/table_a2_panelB.tex) [21] (./output/tables/table_a3_panelA.tex
-
-Underfull \hbox (badness 2512) in paragraph at lines 1--1
-[]\OT1/cmr/m/n/12 Table 10: []Firm, Oc-cu-pa-tion Level: Within Firm OLS: DV: L
-og(1+1000*(Back
- []
-
-) (./output/tables/table_a3_panelB.tex
-Underfull \hbox (badness 1810) in paragraph at lines 1--1
-[]\OT1/cmr/m/n/12 Table 11: []Firm, Oc-cu-pa-tion Level: Be-tween Firm OLS: DV:
- Log(1+1000*(Back
- []
-
-) [22] (./output/tables/table_a4.tex) [23] [24]
-(./output/tables/table_a5_panelA.tex
+) (./output/tables/table_a3_panelB.tex) [22] (./output/tables/table_a4.tex)
+[23] [24] (./output/tables/table_a5_panelA.tex
 Underfull \hbox (badness 2512) in paragraph at lines 1--1
 []\OT1/cmr/m/n/12 Table 13: []Firm, Oc-cu-pa-tion Level: Within Firm OLS: DV: L
 og(1+1000*(Back
@@ -539,7 +527,7 @@ ve/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive
 020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/20
 20/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/202
 0/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on replication_paper.pdf (38 pages, 416454 bytes).
+Output written on replication_paper.pdf (38 pages, 416589 bytes).
 PDF statistics:
  525 PDF objects out of 1000 (max. 8388607)
  445 compressed objects within 5 object streams
