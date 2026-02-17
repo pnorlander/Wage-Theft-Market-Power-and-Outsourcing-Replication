@@ -189,6 +189,8 @@ di "Table 4: 8 .ster files saved"
 di "===== TABLE A.1: NEGATIVE BINOMIAL ====="
 di "SKIPPING: Use pre-computed .ster files (nbreg takes 8+ hours per column)"
 
+do "$code/03_tablea1_nbreg.do"
+
 *===============================================================================
 * TABLE A.2: WEIGHTED LOG(VIOLATIONS) - FIRM FE AND RE
 * Panel A: Firm Fixed Effects (4 cols)
@@ -353,9 +355,17 @@ forvalues i = 1/8 {
     if `i' == 3 | `i' == 5 | `i' == 6 | `i' == 8 local fes "`fes' i.occ2"
     if `i' == 4 | `i' == 5 | `i' == 7 | `i' == 8 local fes "`fes' i.cz90"
 
+    * Columns 2,6,7,8 use clustered SEs; columns 1,3,4,5 use robust SEs
+    if inlist(`i', 2, 6, 7, 8) {
+        local vce_opt "vce(cluster cz90)"
+    }
+    else {
+        local vce_opt "vce(robust)"
+    }
+
     local rhs "`ivs' `fes'"
     _rmcoll `rhs' if logbwpw > 0, expand
-    reg logbwpw `r(varlist)' logh1bs, vce(cluster cz90)
+    reg logbwpw `r(varlist)' logh1bs, `vce_opt'
     est save $sters/tablea6_col`i'.ster, replace
 }
 
@@ -381,9 +391,17 @@ if r(N) > 0 {
         if `i' == 3 | `i' == 5 | `i' == 6 | `i' == 8 local fes "`fes' i.occ2"
         if `i' == 4 | `i' == 5 | `i' == 7 | `i' == 8 local fes "`fes' i.cz90"
 
+        * Columns 2,6,7,8 use clustered SEs; columns 1,3,4,5 use robust SEs
+        if inlist(`i', 2, 6, 7, 8) {
+            local vce_opt "vce(cluster cz90)"
+        }
+        else {
+            local vce_opt "vce(robust)"
+        }
+
         local rhs "`ivs' `fes'"
         _rmcoll `rhs' if logviol > 0, expand
-        reg logviol `r(varlist)' logh1bs, vce(cluster cz90)
+        reg logviol `r(varlist)' logh1bs, `vce_opt'
         est save $sters/tablea7_col`i'.ster, replace
     }
     di "Table A.7: 8 .ster files saved"
@@ -412,9 +430,17 @@ if r(N) > 0 {
         if `i' == 3 | `i' == 5 | `i' == 6 | `i' == 8 local fes "`fes' i.ind"
         if `i' == 4 | `i' == 5 | `i' == 7 | `i' == 8 local fes "`fes' i.cz90"
 
+        * Columns 2,6,7,8 use clustered SEs; columns 1,3,4,5 use robust SEs
+        if inlist(`i', 2, 6, 7, 8) {
+            local vce_opt "vce(cluster cz90)"
+        }
+        else {
+            local vce_opt "vce(robust)"
+        }
+
         local rhs "`ivs' `fes'"
         _rmcoll `rhs' if logviol > 0, expand
-        reg logviol `r(varlist)' logh1bs, vce(cluster cz90)
+        reg logviol `r(varlist)' logh1bs, `vce_opt'
         est save $sters/tablea8_col`i'.ster, replace
     }
     di "Table A.8: 8 .ster files saved"
@@ -479,9 +505,17 @@ forvalues i = 1/8 {
     if `i' == 3 | `i' == 5 | `i' == 6 | `i' == 8 local fes "`fes' i.occ2"
     if `i' == 4 | `i' == 5 | `i' == 7 | `i' == 8 local fes "`fes' i.cz90"
 
+    * Columns 2,6,7,8 use clustered SEs; columns 1,3,4,5 use robust SEs
+    if inlist(`i', 2, 6, 7, 8) {
+        local vce_opt "vce(cluster cz90)"
+    }
+    else {
+        local vce_opt "vce(robust)"
+    }
+
     local rhs "`ivs' `fes'"
     _rmcoll `rhs' if logviol > 0, expand
-    reg logviol `r(varlist)' logh1bs, vce(cluster cz90)
+    reg logviol `r(varlist)' logh1bs, `vce_opt'
     est save $sters/tablea10_col`i'.ster, replace
 }
 
@@ -558,9 +592,17 @@ forvalues i = 1/8 {
     if `i' == 3 | `i' == 5 | `i' == 6 | `i' == 8 local fes "`fes' i.occ2"
     if `i' == 4 | `i' == 5 | `i' == 7 | `i' == 8 local fes "`fes' i.cz90"
 
+    * Columns 2,6,7,8 use clustered SEs; columns 1,3,4,5 use robust SEs
+    if inlist(`i', 2, 6, 7, 8) {
+        local vce_opt "vce(cluster cz90)"
+    }
+    else {
+        local vce_opt "vce(robust)"
+    }
+
     local rhs "`ivs' `fes'"
     _rmcoll `rhs' if logbw > 0, expand
-    reg logbw `r(varlist)' logh1bs, vce(cluster cz90)
+    reg logbw `r(varlist)' logh1bs, `vce_opt'
     est save $sters/tablea12_col`i'.ster, replace
 }
 
@@ -846,10 +888,10 @@ file write t6a " & \multicolumn{2}{c}{Panel \textit{A}: Probability a Firm Ever 
 file write t6a " & (1) & (2) \\\\" _n
 file write t6a " & Unweighted & Population Weighted \\\\" _n
 file write t6a "\hline" _n
-file write t6a "\$SUB_f = 0, \\overline{HHI}_f = 0\$ & " %9.4g (`t6a_s0h0_unwt') " & " %9.4g (`t6a_s0h0_wt') " \\\\" _n
-file write t6a "\$SUB_f = 1, \\overline{HHI}_f = 0\$ & " %9.4g (`t6a_s1h0_unwt') " & " %9.4g (`t6a_s1h0_wt') " \\\\" _n
-file write t6a "\$SUB_f = 0, \\overline{HHI}_f = 1\$ & " %9.4g (`t6a_s0h1_unwt') " & " %9.4g (`t6a_s0h1_wt') " \\\\" _n
-file write t6a "\$SUB_f = 1, \\overline{HHI}_f = 1\$ & " %9.4g (`t6a_s1h1_unwt') " & " %9.4g (`t6a_s1h1_wt') " \\\\" _n
+file write t6a "\$SUB_f = 0, \overline{HHI}_f = 0\$ & " %9.4g (`t6a_s0h0_unwt') " & " %9.4g (`t6a_s0h0_wt') " \\\\" _n
+file write t6a "\$SUB_f = 1, \overline{HHI}_f = 0\$ & " %9.4g (`t6a_s1h0_unwt') " & " %9.4g (`t6a_s1h0_wt') " \\\\" _n
+file write t6a "\$SUB_f = 0, \overline{HHI}_f = 1\$ & " %9.4g (`t6a_s0h1_unwt') " & " %9.4g (`t6a_s0h1_wt') " \\\\" _n
+file write t6a "\$SUB_f = 1, \overline{HHI}_f = 1\$ & " %9.4g (`t6a_s1h1_unwt') " & " %9.4g (`t6a_s1h1_wt') " \\\\" _n
 file write t6a "N & " %12.0fc (`N_panelA_unwt') " & " %12.0fc (`N_panelA_wt') " \\\\" _n
 file write t6a "\hline \hline" _n
 file write t6a "\end{tabular}" _n
@@ -866,10 +908,10 @@ file write t6b " & \multicolumn{2}{c}{Panel \textit{B}: Probability a Firm Viola
 file write t6b " & (1) & (2) \\\\" _n
 file write t6b " & Unweighted & Population Weighted \\\\" _n
 file write t6b "\hline" _n
-file write t6b "\$SUB_f = 0, \\overline{HHI}_{f,t-1} = 0\$ & " %9.4g (`t6b_s0h0_unwt') " & " %9.4g (`t6b_s0h0_wt') " \\\\" _n
-file write t6b "\$SUB_f = 1, \\overline{HHI}_{f,t-1} = 0\$ & " %9.4g (`t6b_s1h0_unwt') " & " %9.4g (`t6b_s1h0_wt') " \\\\" _n
-file write t6b "\$SUB_f = 0, \\overline{HHI}_{f,t-1} = 1\$ & " %9.4g (`t6b_s0h1_unwt') " & " %9.4g (`t6b_s0h1_wt') " \\\\" _n
-file write t6b "\$SUB_f = 1, \\overline{HHI}_{f,t-1} = 1\$ & " %9.4g (`t6b_s1h1_unwt') " & " %9.4g (`t6b_s1h1_wt') " \\\\" _n
+file write t6b "\$SUB_f = 0, \overline{HHI}_{f,t-1} = 0\$ & " %9.4g (`t6b_s0h0_unwt') " & " %9.4g (`t6b_s0h0_wt') " \\\\" _n
+file write t6b "\$SUB_f = 1, \overline{HHI}_{f,t-1} = 0\$ & " %9.4g (`t6b_s1h0_unwt') " & " %9.4g (`t6b_s1h0_wt') " \\\\" _n
+file write t6b "\$SUB_f = 0, \overline{HHI}_{f,t-1} = 1\$ & " %9.4g (`t6b_s0h1_unwt') " & " %9.4g (`t6b_s0h1_wt') " \\\\" _n
+file write t6b "\$SUB_f = 1, \overline{HHI}_{f,t-1} = 1\$ & " %9.4g (`t6b_s1h1_unwt') " & " %9.4g (`t6b_s1h1_wt') " \\\\" _n
 file write t6b "N & " %12.0fc (`N_panelB_unwt') " & " %12.0fc (`N_panelB_wt') " \\\\" _n
 file write t6b "\hline \hline" _n
 file write t6b "\end{tabular}" _n

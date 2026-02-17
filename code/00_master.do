@@ -33,7 +33,7 @@ set matsize 10000
 * Set to 1 to run all regressions from scratch
 * Set to 0 to use pre-computed .ster files (default, fast)
 *-------------------------------------------------------------------------------
-local run_regressions = 0
+local run_regressions = 1
 
 *-------------------------------------------------------------------------------
 * SET PATHS - User should modify $root to match their system
